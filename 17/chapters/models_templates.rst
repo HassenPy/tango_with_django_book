@@ -134,7 +134,7 @@ Then we need to override the ``save`` method of the ``Category`` model, which we
 		likes = models.IntegerField(default=0)
 		slug = models.SlugField(unique=False)
 		#unique=False, to prevent raising UNIQUE constraint failed error while doing the update.
-		#We'll set unique=True later to make the slug field is unique.
+		#We'll set unique=True later to make sure the slug field is unique.
 
 		def save(self, *args, **kwargs):
 			self.slug = slugify(self.name)

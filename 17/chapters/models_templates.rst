@@ -132,8 +132,10 @@ Then we need to override the ``save`` method of the ``Category`` model, which we
 		name = models.CharField(max_length=128, unique=True)
 		views = models.IntegerField(default=0)
 		likes = models.IntegerField(default=0)
-		slug = models.SlugField(unique=True)
-		
+		slug = models.SlugField(unique=False)
+		#unique=False, to prevent raising UNIQUE constraint failed error while doing the update.
+		#We'll set unique=True later to make the slug field is unique.
+
 		def save(self, *args, **kwargs):
 			self.slug = slugify(self.name)
 			super(Category, self).save(*args, **kwargs)
@@ -144,13 +146,22 @@ Then we need to override the ``save`` method of the ``Category`` model, which we
 
 Now that you have performed this update to the Model, you will need to perform the migration. 
 
-.. code-block::
+::
 
 	$ python manage.py makemigrations rango
 	$ python manage.py migrate
 	
 	
-Since we did not provide a default value for the slug, and we already have existing data in the model, then the migrate command will give you two options. Select the option to provide a default, and enter ''. Dont worry this will get updated shortly. Now re-run your population script. Since the ``save`` method is called for each Category, the overrided ``save`` method will be executed, updating the slug field. Run the server, and inspect the data in the models via the admin interface.
+Since we did not provide a default value for the slug, and we already have existing data in the model, then the migrate command will give you two options. Select the option to provide a default, and enter ''. Dont worry this will get updated shortly.
+
+in the population script change this :
+..code-block:: python
+	p = Page.objects.get_or_create(category=cat, title=title, url=url, views=views)[0]
+to
+..code-block:: python
+	p = Page.objects.update_or_create(category=cat, title=title, url=url, views=views)[0]
+
+Now re-run your population script. Since the ``save`` method is called for each Category, the overrided ``save`` method will be executed, updating the slug field. Run the server, and inspect the data in the models via the admin interface.
 
 In the admin interface you may want it to automatically pre-populate the slug field as your type in the category name. To do this you can update ``rango/admin.py`` with the following code:
 
@@ -207,7 +218,7 @@ Next, we can add our new view, ``category()``.
 	        # If we can't, the .get() method raises a DoesNotExist exception.
 	        # So the .get() method returns one model instance or raises an exception.
 	        category = Category.objects.get(slug=category_name_slug)
-			context_dict['category_name'] = category.name
+		context_dict['category_name'] = category.name
 	        
 	        # Retrieve all of the associated pages.
 	        # Note that filter returns >= 1 model instance.

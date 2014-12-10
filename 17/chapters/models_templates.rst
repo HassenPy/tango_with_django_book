@@ -158,6 +158,7 @@ in the population script change this :
 
 	p = Page.objects.get_or_create(category=cat, title=title, url=url, views=views)[0]
 to
+
 	p = Page.objects.update_or_create(category=cat, title=title, url=url, views=views)[0]
 
 Now re-run your population script. Since the ``save`` method is called for each Category, the overrided ``save`` method will be executed, updating the slug field. Run the server, and inspect the data in the models via the admin interface.

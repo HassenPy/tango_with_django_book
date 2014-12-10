@@ -155,10 +155,9 @@ Now that you have performed this update to the Model, you will need to perform t
 Since we did not provide a default value for the slug, and we already have existing data in the model, then the migrate command will give you two options. Select the option to provide a default, and enter ''. Dont worry this will get updated shortly.
 
 in the population script change this :
-..code-block:: python
+
 	p = Page.objects.get_or_create(category=cat, title=title, url=url, views=views)[0]
 to
-..code-block:: python
 	p = Page.objects.update_or_create(category=cat, title=title, url=url, views=views)[0]
 
 Now re-run your population script. Since the ``save`` method is called for each Category, the overrided ``save`` method will be executed, updating the slug field. Run the server, and inspect the data in the models via the admin interface.

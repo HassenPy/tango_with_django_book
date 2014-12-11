@@ -139,7 +139,8 @@ The sensible place to assume a user enters the Rango site is at the index page. 
 		
 	        #Obtain our Response object early so we can add cookie information.
 		response = render(request, 'rango/index.html', context_dict)
-	if reset_last_visit_time:
+
+	    if reset_last_visit_time:
 		response.set_cookie('last_visit', datetime.now())
 		response.set_cookie('visits', visits)
 	

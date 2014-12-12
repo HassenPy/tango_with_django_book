@@ -82,12 +82,12 @@ The Django Registration Redux package provides the machinery for numerous functi
 
 While in the ``registration.backends.default.urls`` it also provides the functions for activating the account in a two stage process:
 
-* activiation complete (used in the two-step registration) -> ``activitate/complete/``
-* activite (used if the account actiona fails) -> ``activite/<activation_key>/``
+* activation complete (used in the two-step registration) -> ``activate/complete/``
+* activate (used if the account actiona fails) -> ``activate/<activation_key>/``
 * activation email (notifies the user an activation email has been sent out)
 
-	* activation email body (a text file, that contains the activiation email text)
-	* activation email subject (a text file, that contains the subject line of the activiation email)
+	* activation email body (a text file, that contains the activation email text)
+	* activation email subject (a text file, that contains the subject line of the activation email)
 
 
 

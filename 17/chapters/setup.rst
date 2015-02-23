@@ -123,11 +123,12 @@ A Django project is a collection of *configurations* and *applications* that tog
 
 A Django application exists to perform a particular task. You need to create specific applications that are responsible for providing your site with particular kinds of functionality. For example, we could imagine that a project might consist of several applications including a polling app, a registration app, and a specific content related app. In another project, we may wish to re-use the polling and registration apps and use them with to dispatch different content. There are many Django applications you can `download <https://code.djangoproject.com/wiki/DjangoResources#Djangoapplicationcomponents>`_ and use in your projects. Since we are getting started, we'll kick off by walking through how to create your own application.
 
-To start, create a new application called *Rango*. From within your Django project directory (e.g. ``<workspace>/tango_with_django_project``), run the following command.
+To start, create a new application called *Rango*. From within your Django project directory (e.g. ``<workspace>/tango_with_django_project``), run the following commands.
 
 ::
 	
 	$ python manage.py startapp rango
+	$ python manage.py migrate
 
 The ``startapp`` command creates a new directory within your project's root. Unsurprisingly, this directory is called ``rango`` - and contained within it are another five Python scripts:
 
